@@ -1,0 +1,959 @@
+* {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        line-height: 1.6;
+        color: #333;
+        /* page background: light-blue to bright-white */
+        background: linear-gradient(180deg, #EAF6FF 0%, #FFFFFF 60%);
+        background-attachment: fixed;
+        background-size: cover;
+    }
+
+    /* About page uses the same white -> dark-pink gradient */
+    body.about-page {
+        /* Richer, warm gradient for the About page (keeps content readable) */
+        background: linear-gradient(180deg, #FFF5E6 0%, #FFD1A3 45%, #FF8A65 100%);
+    }
+
+    /* Homepage uses a soft peach to pink gradient */
+    body.home-page {
+        background: linear-gradient(180deg, #FFF8F3 0%, #FFDEE9 100%);
+    }
+
+    /* Contact page specific styles */
+    body.contact-page {
+        /* Keep page-level soft background for Contact page content */
+        background: linear-gradient(180deg, #FFF6EE 0%, #FFEFE6 100%);
+    }
+
+    /* Use the site's global/home navbar and footer styles for Contact so appearance is consistent */
+    body.contact-page nav { background: linear-gradient(90deg, #6a1b09 0%, #c2522e 60%); box-shadow: 0 10px 40px rgba(138,60,30,0.18); }
+    body.contact-page .logo { color: #fff; }
+    body.contact-page .nav-menu a { color: rgba(255,255,255,0.95); font-weight:600; }
+    body.contact-page .nav-menu a:hover, body.contact-page .nav-menu a.active { color: #FFF4E6; }
+
+    /* Contact-content keeps a soft warm panel but nav/footer use the common site theme */
+    body.contact-page .contact-content { background: linear-gradient(180deg, #FFF7F1 0%, #FFF0E6 100%); padding: 60px 0; }
+    body.contact-page .contact-content .container { background: transparent; }
+
+    /* Footer uses the site's default footer gradient for consistency */
+    body.contact-page footer, body.contact-page .site-footer { background: linear-gradient(180deg, #061526 0%, #0b2545 45%, #2c5aa0 100%); color: #FDF6E6; box-shadow: inset 0 -6px 40px rgba(0,0,0,0.22); border-top: 1px solid rgba(255,255,255,0.06); }
+    body.contact-page footer .footer-info p, body.contact-page footer .footer-info a, body.contact-page footer .footer-connect { color: #F7EAD3; }
+    body.contact-page footer .footer-info a { color: #FFD18A; }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Navigation */
+    /* Make navbar use the Home page warm terracotta gradient across all pages */
+    nav {
+        background: linear-gradient(90deg, #6a1b09 0%, #c2522e 60%); /* Home nav gradient */
+        box-shadow: 0 10px 40px rgba(138,60,30,0.18);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
+
+    /* Richer navbar styling that applies only on the About page */
+    body.about-page nav {
+        background: linear-gradient(90deg, #6a1b09 0%, #c2522e 60%);
+        box-shadow: 0 10px 40px rgba(138,60,30,0.18);
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* Homepage-specific richer styling */
+    body.home-page nav { background: linear-gradient(90deg, #6a1b09 0%, #c2522e 60%); }
+
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #2c5aa0;
+    }
+
+    .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 30px;
+    }
+
+    .nav-menu a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+        color: #2c5aa0;
+    }
+
+    /* Make navbar logo and links white across all pages */
+    nav .logo { color: #ffffff !important; }
+    nav .nav-menu a { color: rgba(255,255,255,0.95) !important; font-weight: 600 !important; }
+    nav .nav-menu a:hover, nav .nav-menu a.active { color: #FFF4E6 !important; }
+
+    /* Main Content */
+    main {
+        margin-top: 70px;
+    }
+
+    /* Hero Section */
+    .hero {
+        /* Warm Sunset hero background (non-green alternative) */
+        /* layered: a subtle dark overlay improves text contrast over the light areas */
+        background: linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.06)), linear-gradient(135deg, #FFF0E0 0%, #FFC68A 45%, #FF8A65 100%);
+        color: #5a3a2a; /* warm dark text for good contrast on the light-to-medium background */
+        padding: 100px 0;
+        text-align: center;
+        position: relative; /* allow absolutely-positioned children to overlap */
+        background-size: cover;
+        background-repeat: no-repeat;
+        box-shadow: inset 0 -8px 40px rgba(0,0,0,0.18);
+    }
+
+    .hero-content {
+        position: relative; /* create stacking context for heading */
+        z-index: 2;
+        padding-right: 0; /* allow the overlaid image to sit on top of the heading */
+    }
+
+    .hero-content h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+        color: inherit; /* use the hero text color */
+        line-height: 1.05;
+    }
+
+    .hero-content p {
+        font-size: 20px;
+        margin-bottom: 30px;
+        max-width: 680px;
+        margin-left: auto;
+        margin-right: auto;
+        color: rgba(90,58,42,0.95);
+    }
+
+    .cta-button {
+        display: inline-block;
+        background: #c2522e; /* warm CTA background */
+        color: #fff;
+        padding: 15px 30px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: transform 0.3s;
+    }
+
+    .cta-button:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Inline hero image placed inside .hero-content (cleaned) */
+    .inline-hero-image {
+        display: block;
+        margin: 24px auto 0 auto; /* space above and center horizontally when in flow */
+        width: auto;
+        max-width: 220px; /* sensible max while overlaid */
+        height: auto;
+        border-radius: 18px; /* slightly more pronounced curve */
+        box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+        border: 3px solid rgba(255,255,255,0.06);
+        object-fit: cover;
+    }
+
+    /* Rounding utility classes for images */
+    .rounded-sm { border-radius: 8px !important; }
+    .rounded { border-radius: 18px !important; }
+    .rounded-lg { border-radius: 40px !important; }
+    .rounded-circle { border-radius: 50% !important; }
+
+    /* If you want the wrapper to clip the image when rounded, add .clip on the wrapper */
+    .inline-hero-wrap.clip { overflow: hidden; border-radius: 18px; }
+
+    /* Position adjustment for inline hero image (overlay on larger screens) */
+    .inline-hero-wrap {
+        display: block;
+        position: absolute;      /* place the image on a layer above content */
+        right: 15%;              /* position towards the right side, over the heading */
+        top: -105px;              /* lift the image so it overlaps the heading */
+        transform: none;
+        transition: transform 0.25s ease-in-out;
+        z-index: 12;             /* higher z-index so image sits above the hero text */
+        pointer-events: auto;
+
+    }
+
+    .inline-hero-wrap:hover {
+        transform: translateY(-8px) scale(1.03);
+    }
+
+    /* slightly larger overlaid image so it sits nicely over the heading */
+    .inline-hero-image {
+        max-width: 240px; /* slightly bigger when overlaid */
+        margin-top: 10px;
+    }
+
+    /* Reduce overlap on smaller screens by returning the image to normal flow */
+    @media (max-width: 900px) {
+        .inline-hero-wrap {
+            position: static;    /* place inline under the content on small screens */
+            transform: none;
+            margin: 24px auto 0 auto;
+            right: auto;
+            top: auto;
+            z-index: 1;
+        }
+        .hero-content {
+            padding-right: 0; /* remove reserved space on small screens */
+        }
+    }
+
+    @media (max-width: 600px) {
+        .inline-hero-image {
+            max-width: 300px;
+            margin-top: 16px;
+            margin-left: 30px;
+        }
+    }
+
+    /* Features Section */
+    .features {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .features h2 {
+        text-align: center;
+        margin-bottom: 50px;
+        font-size: 36px;
+        color: #2c5aa0;
+    }
+
+    .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+    }
+
+    .feature {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    /* Homepage-specific styles for features section */
+    body.home-page .features {
+        background: linear-gradient(180deg, #FFF8F3 0%, #FFEFE0 100%);
+        padding: 100px 0;
+    }
+
+    body.home-page .feature {
+        background: linear-gradient(180deg, #ffffff, #FFF6EE);
+        border-radius: 14px;
+        box-shadow: 0 12px 30px rgba(138,60,30,0.09);
+        padding: 34px;
+    }
+
+    body.home-page .feature h3 { color: #7a2b15; }
+    body.home-page .feature p { color: #5a3a2a; }
+
+    /* Page Header */
+    /* Page headers use the same warm hero background as the Home hero section */
+    .page-header {
+        background: linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.06)), linear-gradient(135deg, #FFF0E0 0%, #FFC68A 45%, #FF8A65 100%);
+        padding: 100px 0; /* same vertical spacing as .hero */
+        text-align: center;
+        position: relative;
+        color: #5a3a2a; /* warm dark text matching hero */
+        background-size: cover;
+        background-repeat: no-repeat;
+        box-shadow: inset 0 -8px 40px rgba(0,0,0,0.12); /* subtle depth */
+    }
+
+    /* Ensure Contact and other pages use the same header background as Home */
+    body.contact-page .page-header { background: linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.06)), linear-gradient(135deg, #FFF0E0 0%, #FFC68A 45%, #FF8A65 100%); color: #5a3a2a; box-shadow: inset 0 -8px 40px rgba(0,0,0,0.12); }
+
+    .page-header h1 {
+        font-size: 48px; /* match hero heading size */
+        color: #ffffff;
+        margin: 0 0 10px 0;
+        line-height: 1.1;
+        text-shadow: 0 4px 18px rgba(0,0,0,0.28);
+    }
+
+    /* Social icons inside the page header (Contact page) */
+    .header-social {
+        margin-top: 18px;
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        align-items: center;
+    }
+
+    .header-social .social-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .header-social .social-icon:hover {
+        transform: translateY(-4px) scale(1.03);
+        box-shadow: 0 10px 22px rgba(0,0,0,0.16);
+    }
+
+    /* Tagline shown under page headers (used on Contact page) */
+    .page-tagline {
+        margin-top: 12px;
+        color: rgba(255,255,255,0.9);
+        font-size: 16px;
+        font-weight: 500;
+        text-align: center;
+        max-width: 820px;
+        margin-left: auto;
+        margin-right: auto;
+        opacity: 0.95;
+    }
+
+    @media (max-width: 600px) {
+        .header-social { gap: 10px; }
+        .header-social .social-icon { width: 40px; height: 40px; }
+    }
+
+    /* Decorative overlapping image in page headers (used on Services) */
+    .page-header-image {
+        position: absolute;
+        right: 6%;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 6;
+        width: 290px;
+        max-width: 30%;
+        pointer-events: none; /* decorative only */
+    }
+
+    .page-header-img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 18px;
+     /* */
+    }
+
+    /* Ensure the header is positioned relative so the absolute image can align */
+    .page-header { position: relative; overflow: visible; }
+
+    @media (max-width: 900px) {
+        .page-header-image {
+            position: static;
+            transform: none;
+            width: 60%;
+            max-width: 360px;
+            margin: 18px auto 0 auto;
+            z-index: 2;
+        }
+        .page-header { padding-bottom: 24px; }
+    }
+
+    /* About Content */
+    .about-content {
+        padding: 80px 0;
+        /* match the Features section background for a consistent look */
+        background: #f8f9fa;
+    }
+
+    /* If About is shown on the home page, use the warm home gradient like features */
+    body.home-page .about-content {
+        background: linear-gradient(180deg, #FFF8F3 0%, #FFEFE0 100%);
+        padding: 100px 0;
+    }
+
+    .about-text h2 {
+        color: #2c5aa0;
+        margin-bottom: 20px;
+    }
+
+    .about-text h3 {
+        color: #2c5aa0;
+        margin: 30px 0 15px 0;
+    }
+
+    .about-text p {
+        margin-bottom: 18px;
+        line-height: 1.8;
+        color: #333;
+        font-size: 16px;
+    }
+
+    /* About page specific styles */
+    .about-text .lead {
+        font-size: 20px;
+        font-weight: 600;
+        color: #2c5aa0;
+        margin-bottom: 12px;
+    }
+
+    /* About intro polish */
+    .divider {
+        width: 60px;
+        height: 4px;
+        margin: 12px 0 18px 0;
+        border-radius: 4px;
+    }
+
+
+
+    .about-cta {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .about-cta .cta-button {
+        background: #2c5aa0;
+        color: #fff;
+        padding: 12px 26px;
+        border-radius: 30px;
+        box-shadow: 0 6px 20px rgba(44,90,160,0.15);
+    }
+
+    .about-cta .cta-button:hover {
+        background: #1e3a8a;
+        transform: translateY(-3px);
+    }
+
+    /* Services Content */
+    .services-content {
+        /* match .features default background and spacing */
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    /* On the home page use the same warm gradient as the features section */
+    body.home-page .services-content {
+        background: linear-gradient(180deg, #FFF8F3 0%, #FFEFE0 100%);
+        padding: 100px 0;
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
+
+
+
+    .service-link {
+        display: block;
+        color: inherit;           /* inherit text color */
+        text-decoration: none;    /* remove underline */
+        border-radius: 10px;      /* match inner card radius */
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .service-link:focus {
+        outline: 3px solid rgba(44,90,160,0.2);
+        outline-offset: 4px;
+    }
+
+    .service {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+        text-align: left;
+        height: 100%;
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+        position: relative; /* allow absolute children like the cta pill */
+    }
+
+    /* small CTA pill inside each service card */
+    .service-cta {
+        position: absolute;
+        right: 5px;
+        bottom: 0px;
+        background: rgba(44,90,160,0.12);
+        color: #2c5aa0;
+        padding: 8px 12px;
+        border-radius: 0; /* square corners per request */
+             /* remove border radius for curve endings */
+        font-weight: 600;
+        font-size: 13px;
+        pointer-events: none; /* card itself is the clickable element */
+    }
+
+    @media (max-width: 900px) {
+        .service-cta {
+            position: static;
+            display: inline-block;
+            margin-top: 16px;
+            background: rgba(44,90,160,0.08);
+            color: #2c5aa0;
+            border-radius: 0; /* keep square on mobile */
+            /* remove border radius for curve endings */
+        }
+    }
+
+    .service-link:hover .service,
+    .service-link:focus .service {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+    }
+
+    .service h3 {
+        color: #2c5aa0;
+        margin-bottom: 12px;
+    }
+
+    .service p {
+        margin-bottom: 12px;
+        color: #555;
+    }
+
+    .service ul {
+        margin-top: 10px;
+        padding-left: 20px;
+    }
+
+    /* Contact Content */
+    .contact-content {
+        padding: 80px 0;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: start;
+    }
+
+    .contact-info h2 {
+        color: #2c5aa0;
+        margin-bottom: 20px;
+    }
+
+    .contact-details {
+        margin-top: 40px;
+    }
+
+    .contact-item {
+        margin-bottom: 30px;
+    }
+
+    .contact-item h3 {
+        color: #2c5aa0;
+        margin-bottom: 5px;
+    }
+
+    /* Form Styles */
+    .contact-form {
+        background: #f8f9fa;
+        padding: 40px;
+        border-radius: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #2c5aa0;
+    }
+
+    .submit-btn {
+        background: #2c5aa0;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+        background: #1e3a8a;
+    }
+
+    .form-message {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 5px;
+        display: none;
+    }
+
+    .form-message.success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .form-message.error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    /* Footer */
+    /* richer, darker footer gradient for a premium look */
+    footer {
+        /* Keep footer consistent across pages (use the site's default footer gradient) */
+        background: linear-gradient(180deg, #061526 0%, #0b2545 45%, #2c5aa0 100%);
+        color: #FDF6E6; /* warm-cream text for contrast */
+        text-align: center;
+        padding: 36px 0;
+        border-top: 1px solid rgba(255,255,255,0.06);
+        box-shadow: inset 0 -6px 40px rgba(0,0,0,0.22);
+    }
+
+    /* Footer-specific text/link overrides to ensure readability on dark background */
+    footer .footer-info p,
+    footer .footer-info a,
+    footer .footer-connect {
+        color: #F7EAD3; /* light warm tone */
+    }
+
+    footer .footer-info a {
+        color: #FFD18A; /* gold accent for links */
+        text-decoration: underline;
+    }
+
+    footer .social-icon {
+        box-shadow: 0 8px 26px rgba(0,0,0,0.28);
+        border-radius: 8px;
+    }
+
+    /* Ensure about-text can be the containing block for absolutely positioned children */
+    .about-text {
+        position: relative;
+    }
+
+    /* Cleaned overlay image rule for About page */
+    .aboutus_image {
+        position: absolute;
+        right: 6%;               /* push toward the right side */
+        top: 30px;               /* moved up so image overlaps heading more */
+        right:-300px;
+        width: 300px;
+        max-width: 50%;
+        z-index: 8;
+        border-radius: 18px;
+        overflow: hidden;        /* clip the image to the rounded wrapper */
+
+    }
+
+    .aboutus_image img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        vertical-align: middle;
+    }
+
+    @media (max-width: 100px) {
+        .aboutus_image {
+            position: static;
+            width: 100%;
+            max-width: 360px;
+            margin: 20px auto 0 auto;
+            right: auto;
+            top: auto;
+            border-radius: 12px;
+        }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .nav-menu {
+            gap: 15px;
+        }
+
+        .hero-content h1 {
+            font-size: 32px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+        }
+
+        .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .contact-form {
+            padding: 30px 20px;
+        }
+    }
+
+    /* Footer styles */
+    .site-footer {
+        padding: 36px 0;
+        background: linear-gradient(180deg, #061526 0%, #0b2545 45%, #2c5aa0 100%);
+        border-top: 1px solid rgba(255,255,255,0.06);
+        color: #FDF6E6; /* warm-cream text */
+        box-shadow: inset 0 -6px 40px rgba(0,0,0,0.22);
+    }
+
+    .footer-grid {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .footer-info p {
+        margin: 6px 0;
+        color: inherit;
+        font-size: 14px;
+    }
+
+    .footer-info a {
+        color: #FFD18A; /* gold accent links */
+        text-decoration: underline;
+    }
+
+    /* CTA block above the contact form */
+    .contact-form-tag {
+        background: linear-gradient(90deg, rgba(30,58,138,0.06), rgba(44,90,160,0.03));
+        padding: 18px 22px;
+        border-radius: 10px;
+        margin-bottom: 18px;
+        text-align: left;
+    }
+
+    .contact-form-tag h3 {
+        margin: 0 0 6px 0;
+        color: #2c5aa0;
+        font-size: 20px;
+    }
+
+    .contact-form-tag p {
+        margin: 0 0 10px 0;
+        color: #444;
+        font-size: 14px;
+    }
+
+    .contact-cta-link {
+        display: inline-block;
+        background: #2c5aa0;
+        color: #fff;
+        padding: 8px 14px;
+        border-radius: 24px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .contact-cta-link:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(44,90,160,0.12);
+    }
+
+    /* small label shown above social icons */
+    .footer-connect {
+        font-weight: 700;
+        font-size: 15px;
+        margin-bottom: 8px;
+        color: inherit; /* use footer's warm-cream text color */
+        text-transform: none;
+    }
+
+    .footer-social a {
+        margin-left: 10px;
+        display: inline-block;
+    }
+
+    .social-icon {
+        width: 36px;
+        height: 36px;
+        object-fit: cover;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .social-icon:hover {
+        transform: translateY(-4px) scale(1.03);
+        box-shadow: 0 8px 18px rgba(0,0,0,0.16);
+    }
+
+    @media (max-width: 700px) {
+        .footer-grid { flex-direction: column; text-align: center; }
+        .footer-social { margin-top: 12px; }
+        .footer-info p { font-size: 15px; }
+    }
+
+    /* Certificates Section */
+    .certificates {
+        padding: 80px 0;
+        background: white;
+    }
+
+    .certificates h2 {
+        text-align: center;
+        margin-bottom: 50px;
+        font-size: 36px;
+        color: #2c5aa0;
+    }
+
+    .certificates-scroll {
+        display: flex;
+        overflow-x: auto;
+        gap: 20px;
+        padding: 20px 0;
+        scroll-behavior: smooth;
+    }
+
+    .certificates-scroll::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .certificates-scroll::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    .certificates-scroll::-webkit-scrollbar-thumb {
+        background: #2c5aa0;
+        border-radius: 10px;
+    }
+
+    .certificates-scroll::-webkit-scrollbar-thumb:hover {
+        background: #1e3a8a;
+    }
+
+    .certificate-item {
+        flex: 0 0 300px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+        transition: transform 0.3s;
+    }
+
+    /* Restore certificate image sizing (original behavior) */
+    .certificate-item img {
+        width: 100%;
+        height: 400px; /* original height preserved */
+        object-fit: cover;
+        display: block;
+    }
+
+    /* Homepage-specific styles for certificates section */
+    body.home-page .certificates {
+        background: linear-gradient(180deg, #FFF7EE 0%, #FFF0E0 100%);
+        padding: 100px 0;
+    }
+
+    body.home-page .certificate-item {
+        background: linear-gradient(180deg, #ffffff, #FFF7F0);
+        border-radius: 12px;
+        box-shadow: 0 10px 28px rgba(138,60,30,0.08);
+        overflow: hidden;
+    }
+
+    /* Services Video Section */
+    .services-video {
+        padding: 80px 0;
+        background: #f8f9fa;
+        text-align: center;
+    }
+
+    .services-video h2 {
+        margin-bottom: 40px;
+        font-size: 36px;
+        color: #2c5aa0;
+    }
+
+    /* Rectangular responsive video player */
+    .responsive-video {
+        width: 100%;
+        max-width: 800px; /* limit to a sensible reading width on large screens */
+        aspect-ratio: 16 / 9; /* keep a rectangular 16:9 ratio */
+        border-radius: 12px; /* subtle rounding for a modern look */
+        /* show whole video frame (no cropping). object-fit: contain adds letterboxing if aspect differs */
+        object-fit: contain;
+        background: #000; /* black background for letterbox bars */
+        box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+        transition: transform 0.28s ease, box-shadow 0.28s ease;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .responsive-video:hover,
+    .responsive-video:focus {
+        /* keep a very subtle lift on hover but avoid zooming the video frame */
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    }
+
+    /* Accessibility: visible focus outline for keyboard users */
+    .responsive-video:focus {
+        outline: 4px solid rgba(34, 119, 255, 0.12);
+        outline-offset: 6px;
+    }
+
+    @media (max-width: 768px) {
+        .responsive-video {
+            max-width: 100%;
+            aspect-ratio: 16 / 9;
+        }
+    }
+
+    /* Homepage heading/link color adjustments */
+    body.home-page .features h2 { color: #7a2b15; }
+    body.home-page .certificates h2 { color: #7a2b15; }
+    body.home-page .certificates-scroll::-webkit-scrollbar-thumb { background: #c2522e; }
+    /* certificate images use the global .certificate-item img rules (keep original height) */
+
+    /* Responsive: keep certificate images at 400px on larger screens but allow natural height on small devices */
+    @media (max-width: 600px) {
+        .certificate-item img {
+            height: auto; /* prevent overly tall images on mobile */
+        }
+    }
+
+
