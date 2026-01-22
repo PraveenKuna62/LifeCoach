@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showMessage('Sending your message...', 'info');
 
             try {
-                const response = await fetch('https://formspree.io/f/mzddzavr', {
+                const response = await fetch('https://formspree.io/f/mzdddjjb', {
                     method: 'POST',
                     body: JSON.stringify({
                         name: name,
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 if (response.ok) {
-                    showMessage('Thank you for your message! We will get back to you soon.', 'success');
+                    showMessage(`Thank you ${name}! Your message has been sent successfully. Sahhana will be in touch shortly.`, 'success');
                     contactForm.reset();
                 } else {
                     const data = await response.json();
